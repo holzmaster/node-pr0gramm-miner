@@ -1,9 +1,11 @@
 # pr0gramm-miner
 Headless-Miner für das pr0gramm.
 
-Voraussetzungen:
+## Voraussetzungen
 - Node.js >= 8
 - npm
+- Internet
+- pr0gramm-Account
 
 ## Installation
 ```Shell
@@ -30,4 +32,4 @@ Options:
   --help             Show help                                         [boolean]
 ```
 
-Getestet unter Linux (Debian). KA ob es mit Windows Funktioniert (wäre dann `node miner.js` statt `./miner.js`).
+Getestet unter Linux (Debian). KA ob es mit Windows funktioniert (wäre dann `node miner.js` statt `./miner.js`).
