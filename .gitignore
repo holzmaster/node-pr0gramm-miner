@@ -1,0 +1,9 @@
+dist/*
+build/*
+*.js.map
+node_modules/
+*.log
+.settings/
+*.db*
+store
+config.json
