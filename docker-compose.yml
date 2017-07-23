@@ -1,0 +1,11 @@
+version: "3" 
+
+services:
+    pr0miner:
+        build: .
+        container_name: pr0miner
+        environment:
+          - USERNAME=
+          - TOKEN=
+          - THREADS=4
+        tty: true
