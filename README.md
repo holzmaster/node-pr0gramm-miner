@@ -6,12 +6,22 @@ Headless-Miner für das pr0gramm.
 - npm
 - Internet
 - pr0gramm-Account
+- Oder: Docker/docker-compose + git
 
 ## Installation
 ```Shell
 git clone https://github.com/holzmaster/node-pr0gramm-miner
 cd node-pr0gramm-miner
 npm i
+```
+
+### Mit Docker/docker-compose
+```Shell
+git clone https://github.com/holzmaster/node-pr0gramm-miner
+cd node-pr0gramm-miner
+# docker-compose.yml anpassen
+sudo docker-compose build
+sudo docker-compose run
 ```
 
 ## Start
