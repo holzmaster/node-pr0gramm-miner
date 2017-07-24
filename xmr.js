@@ -3,7 +3,7 @@ const WebSocket = require("ws");
 
 class XMRJobThread {
     constructor() {
-        this.worker = new Worker("./cryptonight-worker.js");
+        this.worker = new Worker("./cn/cryptonight-worker.js");
         this.worker.postMessage("ready");
         this.worker.onmessage = this.onReady.bind(this);
         this.currentJob = null;
