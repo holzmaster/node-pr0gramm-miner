@@ -1,9 +1,10 @@
-version: "3" 
+version: "2"
 
 services:
     pr0miner:
         build: .
         container_name: pr0miner
+        # Fill in you stuff:
         environment:
           - USERNAME=
           - TOKEN=
