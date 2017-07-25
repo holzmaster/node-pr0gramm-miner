@@ -26,7 +26,7 @@ sudo docker-compose run
 
 ## Start
 ```Shell
-./miner.js -u <username> -t <token> [--num-threads X]
+./miner.js -u <username> -t <token>
 ```
 - Das `<token>` muss über den API-Endpoint [`/api/user/minerauth`](https://pr0gramm.com/api/user/minerauth) geholt werden.
 
