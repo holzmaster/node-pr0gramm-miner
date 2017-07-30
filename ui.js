@@ -1,11 +1,22 @@
 class XMRUI {
-	constructor(xmr, autoRedeem, verbose) {
+	constructor(xmr, autoRedeem, verbose, silent, quiet, poolStatsInterval) {
 		this.xmr = xmr;
 		this.autoRedeem = autoRedeem || false;
 		this.verbose = verbose || false;
+		this.silent = silent;
+		this.poolStats = {
+			interval: poolStatsInterval,
+			lock: true,
+			current: {
+				hashes: 0,
+				toplist: null
+			}
+		};
 		this.xmr.logCallback = this.onLogMessage.bind(this);
 		this.minRedeemSeconds = 24 * 60 * 60;
 		this.sharesToSeconds = .05;
+		if(quiet)
+			console.log = () => {};
 		setInterval(this.update.bind(this), 1e3)
 	}
 	threadAdd(ev) {
@@ -81,13 +92,25 @@ class XMRUI {
 				console.log("Getting shares for user %s", msg.params.user);
 				break;
 			case "pool_stats":
-				console.log("-----------------------");
-				console.log("Current pool stats:");
-				console.log("Pool Hash Rate: %d h/s", msg.params.hashes | 0);
-				console.log("Top users:")
-				for (let user of msg.params.toplist)
-					console.log("%d h/s\t%s", user.hashes | 0, (user.hashes < 1000 ? "\t" : "") + user.name);
-				console.log("-----------------------");
+				let printPoolStats = (hashes, toplist) => {
+					console.log("-----------------------");
+					console.log("Current pool stats:");
+					console.log("Pool Hash Rate: %d h/s", hashes | 0);
+					console.log("Top users:")
+					for (let user of toplist)
+						console.log("%d h/s\t%s", user.hashes | 0, (user.hashes < 1000 ? "\t" : "") + user.name);
+					console.log("-----------------------");
+				};
+				this.poolStats.current.hashes = msg.params.hashes;
+				this.poolStats.current.toplist = msg.params.toplist;
+				if (!this.silent && !this.quiet) {
+					if (this.poolStats.interval === 0)
+						printPoolStats(msg.params.hashes, msg.params.toplist);
+					else if (this.poolStats.lock) {
+						this.poolStats.lock = false;
+						setInterval(() => { printPoolStats(this.poolStats.current.hashes, this.poolStats.current.toplist) }, this.poolStats.interval * 1000);
+					}
+				}
 				if (this.autoRedeem && this.getSeconds() > this.minRedeemSeconds)
 					this.redeem();
 				break;
