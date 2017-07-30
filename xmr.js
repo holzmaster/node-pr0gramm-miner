@@ -106,8 +106,6 @@ class XMR {
             this.shares = msg.params.shares
         } else if (msg.type === "redeem_success") {
             this.shares = 0
-        } else if (msg.type === "redeem_failed") {
-            alert("Fehler beim einlösen. Unbekannter User?")
         } else if (msg.type === "shares") {
             this.shares = msg.params.shares
         }
@@ -151,7 +149,7 @@ class XMR {
             params: params || {}
         };
         this.logCallback(msg);
-        this.socket.send(JSON.stringify(msg))
+        this.socket.send(JSON.stringify(msg));
     }
 }
 

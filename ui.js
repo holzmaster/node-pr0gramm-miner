@@ -47,7 +47,7 @@ class XMRUI {
 		return !!this.current ? this.current.shares * this.sharesToSeconds | 0 : 0;
 	}
 	redeem() {
-		xmr.redeem()
+		this.xmr.redeem();
 	}
 	onLogMessage(msg) {
 		switch (msg.type) {
@@ -59,6 +59,15 @@ class XMRUI {
 				break;
 			case "submit":
 				console.log("Submitted job solution");
+				break;
+			case "redeem":
+				console.log("Trying to redeem %i pr0mium seconds...", this.getSeconds());
+				break;
+			case "redeem_success":
+				console.log("Successfully redeemed your pr0mium seconds!");
+				break;
+			case "redeem_failed":
+				console.log("Error while redeeming your pr0mium seconds, retrying...");
 				break;
 			case "shares":
 				{
@@ -77,18 +86,14 @@ class XMRUI {
 				console.log("Pool Hash Rate: %d h/s", msg.params.hashes | 0);
 				console.log("Top users:")
 				for (let user of msg.params.toplist)
-					console.log("%d h/s\t%s", user.hashes | 0, user.name);
+					console.log("%d h/s\t%s", user.hashes | 0, (user.hashes < 1000 ? "\t" : "") + user.name);
 				console.log("-----------------------");
+				if (this.autoRedeem && this.getSeconds() > this.minRedeemSeconds)
+					this.redeem();
 				break;
 			default:
 				console.dir(msg);
 				break;
-		}
-		if (this.autoRedeem) {
-			const redeemThreshold = 86400;
-			if (this.getSeconds() > redeemThreshold) {
-				this.redeem();
-			}
 		}
 	}
 }
