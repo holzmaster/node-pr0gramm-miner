@@ -2,6 +2,9 @@
 Headless-Miner für das pr0gramm.
 Update: Wenn du schon Docker benutzt, kannst du auch den native-miner versuchen: https://github.com/holzmaster/pr0gramm-miner-native (sollte schneller sein)
 
+## Projekt Archiviert 2019-05-22
+Die Möglichkeit, zu minen, ist nun schon seit einiger Zeit abgeschaltet. Dieses Projekt ist damit hinfällig.
+
 ## Voraussetzungen
 - Node.js >= 8
 - npm
